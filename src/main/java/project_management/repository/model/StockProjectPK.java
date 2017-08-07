@@ -4,18 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-public class TeamProjectPK implements Serializable {
-    private int teamId;
+public class StockProjectPK implements Serializable {
+    private int stockId;
     private int projId;
 
-    @Column(name = "team_id")
+    @Column(name = "stock_id")
     @Id
-    public int getTeamId() {
-        return teamId;
+    public int getStockId() {
+        return stockId;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
     }
 
     @Column(name = "proj_id")
@@ -33,9 +33,9 @@ public class TeamProjectPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamProjectPK that = (TeamProjectPK) o;
+        StockProjectPK that = (StockProjectPK) o;
 
-        if (teamId != that.teamId) return false;
+        if (stockId != that.stockId) return false;
         if (projId != that.projId) return false;
 
         return true;
@@ -43,7 +43,7 @@ public class TeamProjectPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = teamId;
+        int result = stockId;
         result = 31 * result + projId;
         return result;
     }

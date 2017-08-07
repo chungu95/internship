@@ -1,38 +1,64 @@
 package project_management.repository.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "TEAM_EMPLOYEE_JOB")
-@IdClass(TeamEmployeeJobPK.class)
+@Table(name = "team_employee_job")
 public class TeamEmployeeJob {
-    private int teamId;
-    private int epId;
-    private Integer jobId;
+    private int id;
+    private Integer teamId;
+    private Integer epId;
     private Integer dutyId;
-    private Duty dutyByTeamId;
+    private Integer jobId;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private Integer status;
+    private TeamStockEmployee teamStockEmployeeById;
+    private TeamTackleEmployee teamTackleEmployeeById;
     private Team teamByTeamId;
+    private Duty dutyByTeamId;
     private Employee employeeByEpId;
     private Job jobByJobId;
 
     @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
     @Column(name = "team_id")
-    public int getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 
-    @Id
+    @Basic
     @Column(name = "ep_id")
-    public int getEpId() {
+    public Integer getEpId() {
         return epId;
     }
 
-    public void setEpId(int epId) {
+    public void setEpId(Integer epId) {
         this.epId = epId;
+    }
+
+    @Basic
+    @Column(name = "duty_id")
+    public Integer getDutyId() {
+        return dutyId;
+    }
+
+    public void setDutyId(Integer dutyId) {
+        this.dutyId = dutyId;
     }
 
     @Basic
@@ -46,13 +72,33 @@ public class TeamEmployeeJob {
     }
 
     @Basic
-    @Column(name = "duty_id")
-    public Integer getDutyId() {
-        return dutyId;
+    @Column(name = "start_time")
+    public Timestamp getStartTime() {
+        return startTime;
     }
 
-    public void setDutyId(Integer dutyId) {
-        this.dutyId = dutyId;
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
+    @Basic
+    @Column(name = "end_time")
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+
+    @Basic
+    @Column(name = "status")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override
@@ -62,35 +108,51 @@ public class TeamEmployeeJob {
 
         TeamEmployeeJob that = (TeamEmployeeJob) o;
 
-        if (teamId != that.teamId) return false;
-        if (epId != that.epId) return false;
-        if (jobId != null ? !jobId.equals(that.jobId) : that.jobId != null) return false;
+        if (id != that.id) return false;
+        if (teamId != null ? !teamId.equals(that.teamId) : that.teamId != null) return false;
+        if (epId != null ? !epId.equals(that.epId) : that.epId != null) return false;
         if (dutyId != null ? !dutyId.equals(that.dutyId) : that.dutyId != null) return false;
+        if (jobId != null ? !jobId.equals(that.jobId) : that.jobId != null) return false;
+        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
+        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = teamId;
-        result = 31 * result + epId;
-        result = 31 * result + (jobId != null ? jobId.hashCode() : 0);
+        int result = id;
+        result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
+        result = 31 * result + (epId != null ? epId.hashCode() : 0);
         result = 31 * result + (dutyId != null ? dutyId.hashCode() : 0);
+        result = 31 * result + (jobId != null ? jobId.hashCode() : 0);
+        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "duty_id", nullable = false, insertable = false, updatable = false)
-    public Duty getDutyByTeamId() {
-        return dutyByTeamId;
+    @OneToOne(mappedBy = "teamEmployeeJobById", fetch = FetchType.LAZY)
+    public TeamStockEmployee getTeamStockEmployeeById() {
+        return teamStockEmployeeById;
     }
 
-    public void setDutyByTeamId(Duty dutyByTeamId) {
-        this.dutyByTeamId = dutyByTeamId;
+    public void setTeamStockEmployeeById(TeamStockEmployee teamStockEmployeeById) {
+        this.teamStockEmployeeById = teamStockEmployeeById;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false, insertable = false, updatable = false)
+    @OneToOne(mappedBy = "teamEmployeeJobById", fetch = FetchType.LAZY)
+    public TeamTackleEmployee getTeamTackleEmployeeById() {
+        return teamTackleEmployeeById;
+    }
+
+    public void setTeamTackleEmployeeById(TeamTackleEmployee teamTackleEmployeeById) {
+        this.teamTackleEmployeeById = teamTackleEmployeeById;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id", insertable = false, updatable = false)
     public Team getTeamByTeamId() {
         return teamByTeamId;
     }
@@ -99,8 +161,18 @@ public class TeamEmployeeJob {
         this.teamByTeamId = teamByTeamId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "ep_id", referencedColumnName = "emp_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id", referencedColumnName = "duty_id", insertable = false, updatable = false)
+    public Duty getDutyByTeamId() {
+        return dutyByTeamId;
+    }
+
+    public void setDutyByTeamId(Duty dutyByTeamId) {
+        this.dutyByTeamId = dutyByTeamId;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ep_id", referencedColumnName = "emp_id", insertable = false, updatable = false)
     public Employee getEmployeeByEpId() {
         return employeeByEpId;
     }
@@ -109,7 +181,7 @@ public class TeamEmployeeJob {
         this.employeeByEpId = employeeByEpId;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", referencedColumnName = "job_id", insertable = false, updatable = false)
     public Job getJobByJobId() {
         return jobByJobId;

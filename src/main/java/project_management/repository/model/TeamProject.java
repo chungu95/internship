@@ -3,23 +3,13 @@ package project_management.repository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TEAM_PROJECT")
+@Table(name = "team_project")
 @IdClass(TeamProjectPK.class)
 public class TeamProject {
-    private int projId;
     private int teamId;
-    private Project projectByProjId;
+    private int projId;
     private Team teamByTeamId;
-
-    @Id
-    @Column(name = "proj_id")
-    public int getProjId() {
-        return projId;
-    }
-
-    public void setProjId(int projId) {
-        this.projId = projId;
-    }
+    private Project projectByProjId;
 
     @Id
     @Column(name = "team_id")
@@ -31,6 +21,16 @@ public class TeamProject {
         this.teamId = teamId;
     }
 
+    @Id
+    @Column(name = "proj_id")
+    public int getProjId() {
+        return projId;
+    }
+
+    public void setProjId(int projId) {
+        this.projId = projId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,30 +38,20 @@ public class TeamProject {
 
         TeamProject that = (TeamProject) o;
 
-        if (projId != that.projId) return false;
         if (teamId != that.teamId) return false;
+        if (projId != that.projId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = projId;
-        result = 31 * result + teamId;
+        int result = teamId;
+        result = 31 * result + projId;
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "proj_id", referencedColumnName = "proj_id", nullable = false, insertable = false, updatable = false)
-    public Project getProjectByProjId() {
-        return projectByProjId;
-    }
-
-    public void setProjectByProjId(Project projectByProjId) {
-        this.projectByProjId = projectByProjId;
-    }
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false, insertable = false, updatable = false)
     public Team getTeamByTeamId() {
         return teamByTeamId;
@@ -69,5 +59,15 @@ public class TeamProject {
 
     public void setTeamByTeamId(Team teamByTeamId) {
         this.teamByTeamId = teamByTeamId;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "proj_id", referencedColumnName = "proj_id", nullable = false, insertable = false, updatable = false)
+    public Project getProjectByProjId() {
+        return projectByProjId;
+    }
+
+    public void setProjectByProjId(Project projectByProjId) {
+        this.projectByProjId = projectByProjId;
     }
 }

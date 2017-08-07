@@ -5,18 +5,8 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 public class DutyPermissionPK implements Serializable {
-    private int dutyId;
     private int permissionId;
-
-    @Column(name = "duty_id")
-    @Id
-    public int getDutyId() {
-        return dutyId;
-    }
-
-    public void setDutyId(int dutyId) {
-        this.dutyId = dutyId;
-    }
+    private int dutyId;
 
     @Column(name = "permission_id")
     @Id
@@ -28,6 +18,16 @@ public class DutyPermissionPK implements Serializable {
         this.permissionId = permissionId;
     }
 
+    @Column(name = "duty_id")
+    @Id
+    public int getDutyId() {
+        return dutyId;
+    }
+
+    public void setDutyId(int dutyId) {
+        this.dutyId = dutyId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,16 +35,16 @@ public class DutyPermissionPK implements Serializable {
 
         DutyPermissionPK that = (DutyPermissionPK) o;
 
-        if (dutyId != that.dutyId) return false;
         if (permissionId != that.permissionId) return false;
+        if (dutyId != that.dutyId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = dutyId;
-        result = 31 * result + permissionId;
+        int result = permissionId;
+        result = 31 * result + dutyId;
         return result;
     }
 }

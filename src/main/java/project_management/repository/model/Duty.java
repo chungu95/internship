@@ -50,7 +50,7 @@ public class Duty {
         return result;
     }
 
-    @OneToMany(mappedBy = "dutyByDutyId")
+    @OneToMany(mappedBy = "dutyByDutyId", fetch = FetchType.LAZY)
     public List<DutyPermission> getDutyPermissionsByDutyId() {
         return dutyPermissionsByDutyId;
     }
@@ -59,7 +59,7 @@ public class Duty {
         this.dutyPermissionsByDutyId = dutyPermissionsByDutyId;
     }
 
-    @OneToMany(mappedBy = "dutyByTeamId")
+    @OneToMany(mappedBy = "dutyByTeamId", fetch = FetchType.LAZY)
     public List<TeamEmployeeJob> getTeamEmployeeJobsByDutyId() {
         return teamEmployeeJobsByDutyId;
     }
