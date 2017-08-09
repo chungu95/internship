@@ -3,7 +3,7 @@ package project_management.repository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "STOCK_EMPLOYEE")
+@Table(name = "stock_employee")
 @IdClass(StockEmployeePK.class)
 public class StockEmployee {
     private int stockId;
@@ -51,7 +51,7 @@ public class StockEmployee {
         return result;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id", referencedColumnName = "stock_id", nullable = false, insertable = false, updatable = false)
     public Stock getStockByStockId() {
         return stockByStockId;
@@ -61,7 +61,7 @@ public class StockEmployee {
         this.stockByStockId = stockByStockId;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id", referencedColumnName = "emp_id", nullable = false, insertable = false, updatable = false)
     public Employee getEmployeeByEmpId() {
         return employeeByEmpId;

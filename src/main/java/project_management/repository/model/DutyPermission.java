@@ -3,23 +3,13 @@ package project_management.repository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "DUTY_PERMISSION")
+@Table(name = "duty_permission")
 @IdClass(DutyPermissionPK.class)
 public class DutyPermission {
-    private int dutyId;
     private int permissionId;
-    private Duty dutyByDutyId;
+    private int dutyId;
     private Permission permissionByPermissionId;
-
-    @Id
-    @Column(name = "duty_id")
-    public int getDutyId() {
-        return dutyId;
-    }
-
-    public void setDutyId(int dutyId) {
-        this.dutyId = dutyId;
-    }
+    private Duty dutyByDutyId;
 
     @Id
     @Column(name = "permission_id")
@@ -31,6 +21,16 @@ public class DutyPermission {
         this.permissionId = permissionId;
     }
 
+    @Id
+    @Column(name = "duty_id")
+    public int getDutyId() {
+        return dutyId;
+    }
+
+    public void setDutyId(int dutyId) {
+        this.dutyId = dutyId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,30 +38,20 @@ public class DutyPermission {
 
         DutyPermission that = (DutyPermission) o;
 
-        if (dutyId != that.dutyId) return false;
         if (permissionId != that.permissionId) return false;
+        if (dutyId != that.dutyId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = dutyId;
-        result = 31 * result + permissionId;
+        int result = permissionId;
+        result = 31 * result + dutyId;
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "duty_id", referencedColumnName = "duty_id", nullable = false, insertable = false, updatable = false)
-    public Duty getDutyByDutyId() {
-        return dutyByDutyId;
-    }
-
-    public void setDutyByDutyId(Duty dutyByDutyId) {
-        this.dutyByDutyId = dutyByDutyId;
-    }
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id", referencedColumnName = "permission_id", nullable = false, insertable = false, updatable = false)
     public Permission getPermissionByPermissionId() {
         return permissionByPermissionId;
@@ -69,5 +59,15 @@ public class DutyPermission {
 
     public void setPermissionByPermissionId(Permission permissionByPermissionId) {
         this.permissionByPermissionId = permissionByPermissionId;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "duty_id", referencedColumnName = "duty_id", nullable = false, insertable = false, updatable = false)
+    public Duty getDutyByDutyId() {
+        return dutyByDutyId;
+    }
+
+    public void setDutyByDutyId(Duty dutyByDutyId) {
+        this.dutyByDutyId = dutyByDutyId;
     }
 }

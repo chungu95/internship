@@ -6,8 +6,8 @@ import java.util.List;
 @Entity
 public class Team {
     private int teamId;
-    private String teamName;
     private Integer leaderId;
+    private String teamName;
     private List<TeamEmployeeJob> teamEmployeeJobsByTeamId;
     private List<TeamProject> teamProjectsByTeamId;
 
@@ -22,16 +22,6 @@ public class Team {
     }
 
     @Basic
-    @Column(name = "team_name")
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    @Basic
     @Column(name = "leader_id")
     public Integer getLeaderId() {
         return leaderId;
@@ -39,6 +29,16 @@ public class Team {
 
     public void setLeaderId(Integer leaderId) {
         this.leaderId = leaderId;
+    }
+
+    @Basic
+    @Column(name = "team_name")
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class Team {
         Team team = (Team) o;
 
         if (teamId != team.teamId) return false;
-        if (teamName != null ? !teamName.equals(team.teamName) : team.teamName != null) return false;
         if (leaderId != null ? !leaderId.equals(team.leaderId) : team.leaderId != null) return false;
+        if (teamName != null ? !teamName.equals(team.teamName) : team.teamName != null) return false;
 
         return true;
     }
@@ -58,12 +58,12 @@ public class Team {
     @Override
     public int hashCode() {
         int result = teamId;
-        result = 31 * result + (teamName != null ? teamName.hashCode() : 0);
         result = 31 * result + (leaderId != null ? leaderId.hashCode() : 0);
+        result = 31 * result + (teamName != null ? teamName.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "teamByTeamId")
+    @OneToMany(mappedBy = "teamByTeamId", fetch = FetchType.LAZY)
     public List<TeamEmployeeJob> getTeamEmployeeJobsByTeamId() {
         return teamEmployeeJobsByTeamId;
     }
@@ -72,7 +72,7 @@ public class Team {
         this.teamEmployeeJobsByTeamId = teamEmployeeJobsByTeamId;
     }
 
-    @OneToMany(mappedBy = "teamByTeamId")
+    @OneToMany(mappedBy = "teamByTeamId", fetch = FetchType.LAZY)
     public List<TeamProject> getTeamProjectsByTeamId() {
         return teamProjectsByTeamId;
     }

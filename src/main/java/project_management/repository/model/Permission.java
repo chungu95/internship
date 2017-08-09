@@ -7,6 +7,7 @@ import java.util.List;
 public class Permission {
     private int permissionId;
     private String permissionName;
+    private List<UsersPermission> usersPermissionsByPermissionId;
     private List<DutyPermission> dutyPermissionsByPermissionId;
 
     @Id
@@ -50,7 +51,16 @@ public class Permission {
         return result;
     }
 
-    @OneToMany(mappedBy = "permissionByPermissionId")
+    @OneToMany(mappedBy = "permissionByPermissionId", fetch = FetchType.LAZY)
+    public List<UsersPermission> getUsersPermissionsByPermissionId() {
+        return usersPermissionsByPermissionId;
+    }
+
+    public void setUsersPermissionsByPermissionId(List<UsersPermission> usersPermissionsByPermissionId) {
+        this.usersPermissionsByPermissionId = usersPermissionsByPermissionId;
+    }
+
+    @OneToMany(mappedBy = "permissionByPermissionId", fetch = FetchType.LAZY)
     public List<DutyPermission> getDutyPermissionsByPermissionId() {
         return dutyPermissionsByPermissionId;
     }

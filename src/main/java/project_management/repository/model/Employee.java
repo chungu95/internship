@@ -1,24 +1,31 @@
 package project_management.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
-public class Employee {
+public class Employee implements Serializable {
     private int empId;
-    private Integer userId;
-    private String epName;
-    private Timestamp epDayofbirth;
     private String epAddress;
+    private Date epDayofbirth;
     private String epEmail;
+    private String epName;
     private String epPhoneNumber;
-    private Users userByUsersId;
+    private Integer userId;
+    private String epCmt;
+    private Users usersByUserId;
+    private Integer isDeleted;
+    private String status = "FREE";
     private List<StockEmployee> stockEmployeesByEmpId;
     private List<TackleEmployee> tackleEmployeesByEmpId;
     private List<TeamEmployeeJob> teamEmployeeJobsByEmpId;
 
     @Id
+    @GeneratedValue
     @Column(name = "emp_id")
     public int getEmpId() {
         return empId;
@@ -26,36 +33,6 @@ public class Employee {
 
     public void setEmpId(int empId) {
         this.empId = empId;
-    }
-
-    @Basic
-    @Column(name = "user_id")
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "ep_name")
-    public String getEpName() {
-        return epName;
-    }
-
-    public void setEpName(String epName) {
-        this.epName = epName;
-    }
-
-    @Basic
-    @Column(name = "ep_dayofbirth")
-    public Timestamp getEpDayofbirth() {
-        return epDayofbirth;
-    }
-
-    public void setEpDayofbirth(Timestamp epDayofbirth) {
-        this.epDayofbirth = epDayofbirth;
     }
 
     @Basic
@@ -69,6 +46,16 @@ public class Employee {
     }
 
     @Basic
+    @Column(name = "ep_dayofbirth")
+    public Date getEpDayofbirth() {
+        return epDayofbirth;
+    }
+
+    public void setEpDayofbirth(Date epDayofbirth) {
+        this.epDayofbirth = epDayofbirth;
+    }
+
+    @Basic
     @Column(name = "ep_email")
     public String getEpEmail() {
         return epEmail;
@@ -76,6 +63,16 @@ public class Employee {
 
     public void setEpEmail(String epEmail) {
         this.epEmail = epEmail;
+    }
+
+    @Basic
+    @Column(name = "ep_name")
+    public String getEpName() {
+        return epName;
+    }
+
+    public void setEpName(String epName) {
+        this.epName = epName;
     }
 
     @Basic
@@ -88,6 +85,46 @@ public class Employee {
         this.epPhoneNumber = epPhoneNumber;
     }
 
+    @Basic
+    @Column(name = "ep_cmt", unique = true, nullable = true)
+    public String getEpCmt() {
+        return epCmt;
+    }
+
+    public void setEpCmt(String epCmt) {
+        this.epCmt = epCmt;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "int default 0")
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    @Transient
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,14 +133,14 @@ public class Employee {
         Employee employee = (Employee) o;
 
         if (empId != employee.empId) return false;
-        if (userId != null ? !userId.equals(employee.userId) : employee.userId != null) return false;
-        if (epName != null ? !epName.equals(employee.epName) : employee.epName != null) return false;
+        if (epAddress != null ? !epAddress.equals(employee.epAddress) : employee.epAddress != null) return false;
         if (epDayofbirth != null ? !epDayofbirth.equals(employee.epDayofbirth) : employee.epDayofbirth != null)
             return false;
-        if (epAddress != null ? !epAddress.equals(employee.epAddress) : employee.epAddress != null) return false;
         if (epEmail != null ? !epEmail.equals(employee.epEmail) : employee.epEmail != null) return false;
+        if (epName != null ? !epName.equals(employee.epName) : employee.epName != null) return false;
         if (epPhoneNumber != null ? !epPhoneNumber.equals(employee.epPhoneNumber) : employee.epPhoneNumber != null)
             return false;
+        if (userId != null ? !userId.equals(employee.userId) : employee.userId != null) return false;
 
         return true;
     }
@@ -111,26 +148,27 @@ public class Employee {
     @Override
     public int hashCode() {
         int result = empId;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (epName != null ? epName.hashCode() : 0);
-        result = 31 * result + (epDayofbirth != null ? epDayofbirth.hashCode() : 0);
         result = 31 * result + (epAddress != null ? epAddress.hashCode() : 0);
+        result = 31 * result + (epDayofbirth != null ? epDayofbirth.hashCode() : 0);
         result = 31 * result + (epEmail != null ? epEmail.hashCode() : 0);
+        result = 31 * result + (epName != null ? epName.hashCode() : 0);
         result = 31 * result + (epPhoneNumber != null ? epPhoneNumber.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
 
-    @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_Id", insertable = false, updatable = false)
-    public Users getUserByUsersId() {
-        return userByUsersId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    public Users getUsersByUserId() {
+        return usersByUserId;
     }
 
-    public void setUserByUsersId(Users userByUsersId) {
-        this.userByUsersId = userByUsersId;
+    public void setUsersByUserId(Users usersByUserId) {
+        this.usersByUserId = usersByUserId;
     }
 
-    @OneToMany(mappedBy = "employeeByEmpId")
+    @OneToMany(mappedBy = "employeeByEmpId", fetch = FetchType.LAZY)
     public List<StockEmployee> getStockEmployeesByEmpId() {
         return stockEmployeesByEmpId;
     }
@@ -139,7 +177,7 @@ public class Employee {
         this.stockEmployeesByEmpId = stockEmployeesByEmpId;
     }
 
-    @OneToMany(mappedBy = "employeeByEmpId")
+    @OneToMany(mappedBy = "employeeByEmpId", fetch = FetchType.LAZY)
     public List<TackleEmployee> getTackleEmployeesByEmpId() {
         return tackleEmployeesByEmpId;
     }
@@ -148,7 +186,7 @@ public class Employee {
         this.tackleEmployeesByEmpId = tackleEmployeesByEmpId;
     }
 
-    @OneToMany(mappedBy = "employeeByEpId")
+    @OneToMany(mappedBy = "employeeByEpId", fetch = FetchType.LAZY)
     public List<TeamEmployeeJob> getTeamEmployeeJobsByEmpId() {
         return teamEmployeeJobsByEmpId;
     }
