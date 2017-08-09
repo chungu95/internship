@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http//www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <resource th:replace="fragments/header :: resource"></resource>
+    <script src="./public/js/bootstrap-datepicker.min.js" th:src="@{js/bootstrap-datepicker.min.js}"></script>
+    <script src="./public/js/service/project-service.js" th:src="@{js/service/project-service.js}"></script>
+    <meta charset="UTF-8"/>
+    <title>Khởi tạo dự án</title>
+</head>
+<body class="no-skin">
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+    <div th:replace="fragments/side-bar :: sidebar"></div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Trang chủ</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Dự án</a>
+                    </li>
+                    <li class="active">Lập dự án</li>
+                </ul><!-- /.breadcrumb -->
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <br/>
+                        <div class="col-sm-12">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+                                    <li>
+                                        <a data-toggle="tab" href="#profile4">Lập dự án</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="profile4" class="tab-pane in active">
+                                        <div class="clearfix main">
+                                            <form id="frm" class="form-horizontal" role="form"
+                                                  th:action="@{add-project}"
+                                                  enctype="application/x-www-form-urlencoded" method="post">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="projName"> Tên dự án </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="projName" name="projName"
+                                                               placeholder="Tên dự án"
+                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="projKey"> Từ khóa </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="projKey" name="projKey"
+                                                               placeholder="Từ khóa"
+                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="pmId">
+                                                        Trưởng dự án </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="pmId" name="pmId"
+                                                               placeholder="Trưởng dự án"
+                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="id-date-picker-1">
+                                                        Ngày khởi công </label>
+                                                    <div class="col-sm-9">
+                                                        <div class=" input-group col-xs-10 col-sm-5">
+                                                            <input class="form-control date-picker"
+                                                                   id="id-date-picker-1"
+                                                                   name="startTime" type="text"
+                                                                   data-date-format="yyyy-mm-dd" required="required"/>
+                                                            <span class="input-group-addon"><i
+                                                                    class="fa fa-calendar bigger-110"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="submit">
+                                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        Submit
+                                                    </button>
+
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <button class="btn" type="reset">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        Reset
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.col -->
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <script language="JavaScript">
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        })
+        //show datepicker when clicking on the icon
+            .next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+    </script>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package project_management.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,11 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/").hasRole("USER")
-                .antMatchers("/get").hasRole("USER")
                 .and()
                 .formLogin()
                 .loginPage(WebURL.USER.LOGIN_PAGE)
@@ -46,6 +46,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");
-    }
 
+        http
+                .authorizeRequests()
+                .antMatchers("/get").hasRole("USER")
+                .antMatchers(WebURL.EMPLOYEE.CREATE_NEW_EMPLOYEE).hasRole("HR")
+                .antMatchers(WebURL.EMPLOYEE.CREATE_NEW_EMPLOYEE_PAGE).hasRole("HR")
+                .antMatchers(WebURL.EMPLOYEE.ALL_EMPLOYEE_PAGE).hasRole("HR")
+                .antMatchers(WebURL.EMPLOYEE.UPDATE_EMPLOYEE).hasRole("HR")
+                .antMatchers(WebURL.EMPLOYEE.EDIT_EMPLOYEE_PAGE).hasRole("HR")
+                .antMatchers(WebURL.EMPLOYEE.DELETE_EMPLOYEE).hasRole("HR");
+    }
 }

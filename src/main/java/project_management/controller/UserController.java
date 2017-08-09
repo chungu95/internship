@@ -2,6 +2,7 @@ package project_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,7 @@ import project_management.repository.repository.EmployeeRepository;
 import project_management.repository.repository.UserRepository;
 import project_management.service.service_interface.UserService;
 
+import javax.print.attribute.standard.Media;
 import java.util.logging.Logger;
 
 @Controller
@@ -30,8 +32,10 @@ public class UserController {
     private UserRepository userRepository;
 
     @ResponseBody
-    @RequestMapping(value = "get", method = RequestMethod.GET)
-    public Users add() {
+    @RequestMapping(value = "add-new-user", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Users add(Users user) {
+
 //        for(int i = 0; i<100000;i++){
 //            LOGGER.info("Save lần thứ "+i);
 //            Users user = new Users();
@@ -41,7 +45,22 @@ public class UserController {
 //            user.setUserType("employee");
 //            userRepository.save(user);
 //        }
-        return userRepository.findOne(1);
+        return userRepository.save(user);
+    }
+    @ResponseBody
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    public Users get() {
+
+//        for(int i = 0; i<100000;i++){
+//            LOGGER.info("Save lần thứ "+i);
+//            Users user = new Users();
+//            user.setUsername("a"+i);
+//            user.setPassword("123");
+//            user.setUserEmail("Chung"+i+"@gmail.com");
+//            user.setUserType("employee");
+//            userRepository.save(user);
+//        }
+        return userRepository.findOne(28329);
     }
 
 //    @ResponseBody

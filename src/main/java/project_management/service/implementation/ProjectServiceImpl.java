@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project_management.api.DateApi;
 import project_management.repository.model.Project;
 import project_management.repository.repository.ProjectRepository;
 import project_management.service.service_interface.ProjectService;
@@ -24,6 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project addProject(Project project) {
         LOGGER.info("ProjectService -> Add new project");
+        project.setCreateTime(DateApi.getCurrentDate());
+        project.setStatus(0);
         try {
             return projectRepository.save(project);
         } catch (HibernateException he) {
@@ -92,6 +95,16 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (HibernateException he) {
             LOGGER.error(he.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public boolean checkProjectKeyIfExist(String key) {
+        LOGGER.info("ProjectService -> Check project key if exist");
+        if (projectRepository.findProjectByProjKey(key) != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

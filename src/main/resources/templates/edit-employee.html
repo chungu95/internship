@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http//www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <resource th:replace="fragments/header :: resource"></resource>
+    <script src="./public/js/bootstrap-datepicker.min.js" th:src="@{js/bootstrap-datepicker.min.js}"></script>
+    <script src="./public/js/service/employee-service.js" th:src="@{js/service/employee-service.js}"></script>
+    <meta charset="UTF-8"/>
+    <title>Sửa thông tin nhân viên</title>
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+</head>
+<body class="no-skin">
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+    <div th:replace="fragments/side-bar :: sidebar"></div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Trang chủ</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Nhân viên</a>
+                    </li>
+                    <li class="active">Sửa thông tin nhân viên</li>
+                </ul><!-- /.breadcrumb -->
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input"
+                                   id="nav-search-input" autocomplete="off"/>
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <br/>
+                        <div class="col-sm-12">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+                                    <!--<li class="active">-->
+                                    <!--<a data-toggle="tab" href="#home4">Tạo tài khoản</a>-->
+                                    <!--</li>-->
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#profile4">Sửa thông tin nhân viên</a>
+                                    </li>
+
+                                    <!--<li>-->
+                                    <!--<a data-toggle="tab" href="#dropdown14">More</a>-->
+                                    <!--</li>-->
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="home4" class="tab-pane">
+                                        <div class="clearfix main">
+                                        </div>
+                                    </div>
+
+                                    <div id="profile4" class="tab-pane in active">
+                                        <div class="clearfix main">
+                                            <form id="frm" class="form-horizontal" role="form"
+                                                  th:action="@{/update-employee}"
+                                                  enctype="application/x-www-form-urlencoded" method="post">
+                                                <input type="hidden" name="empId" th:value="${employee.empId}"/>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="ep_name"> Họ và
+                                                        tên </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="ep_name" name="epName"
+                                                               th:value="${employee.epName}"
+                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="ep_address"> Địa
+                                                        chỉ </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="ep_address" name="epAddress"
+                                                               th:value="${employee.epAddress}"
+                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="ep_email">
+                                                        Email </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="email" id="ep_email" name="epEmail"
+                                                               th:value="${employee.epEmail}"
+                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="id-date-picker-1">
+                                                        Ngày sinh </label>
+                                                    <div class="col-sm-9 ">
+                                                        <div class=" input-group col-xs-10 col-sm-5">
+                                                            <input class="form-control date-picker"
+                                                                   id="id-date-picker-1"
+                                                                   name="epDayofbirth" type="text"
+                                                                   th:value="${employee.epDayofbirth}"
+                                                                   data-date-format="yyyy-mm-dd" required="required"/>
+                                                            <span class="input-group-addon"><i
+                                                                    class="fa fa-calendar bigger-110"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="ep_phone"> Số điện
+                                                        thoại </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="ep_phone" name="epPhoneNumber"
+                                                               th:value="${employee.epPhoneNumber}" class="col-xs-10 col-sm-5"
+                                                               required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="ep_cmt"> Số chứng minh </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="ep_cmt" name="epCmt"
+                                                               th:value="${employee.epCmt}" class="col-xs-10 col-sm-5"
+                                                               required="required" contenteditable="false"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="submit">
+                                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        Submit
+                                                    </button>
+
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <button class="btn" type="reset">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        Reset
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown14" class="tab-pane">
+                                        <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out
+                                            mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.col -->
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <script language="JavaScript">
+
+        //        function add_employee() {
+        //            $.ajax({
+        //                url: "../add-new-employee",
+        //                type: "post",
+        //                dataType: "application/json",
+        //                data: {
+        //                    epName: document.getElementById("ep_name").value.trim(),
+        //                    epAddress: document.getElementById("ep_address").value.trim(),
+        //                    epDayofbirth: document.getElementById("id-date-picker-1").value.trim(),
+        //                    epEmail: document.getElementById("ep_email").value.trim(),
+        //                    epPhoneNumber: document.getElementById("ep_phone").value.trim()
+        //                },
+        //                success: function (result) {
+        //                    $(result, function (key, item) {
+        //                        alert(item['statusMessage']);
+        //                    })
+        //                }
+        //            });
+        //        }
+
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        })
+        //show datepicker when clicking on the icon
+            .next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+    </script>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

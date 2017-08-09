@@ -11,4 +11,5 @@ public interface ProjectService {
     void deleteProject (Integer id);
     List<Project> getAllProject ();
     Project getProjectById(Integer id);
+    boolean checkProjectKeyIfExist(String key);
 }

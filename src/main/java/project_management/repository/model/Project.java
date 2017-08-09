@@ -22,6 +22,7 @@ public class Project {
     private List<TeamProject> teamProjectsByProjId;
 
     @Id
+    @GeneratedValue
     @Column(name = "proj_id")
     public int getProjId() {
         return projId;
@@ -62,7 +63,7 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "proj_key")
+    @Column(name = "proj_key",  unique = true)
     public String getProjKey() {
         return projKey;
     }

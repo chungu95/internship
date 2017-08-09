@@ -7,4 +7,5 @@ import project_management.repository.model.Project;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
+    Project findProjectByProjKey(String projKey);
 }

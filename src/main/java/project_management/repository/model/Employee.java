@@ -16,12 +16,16 @@ public class Employee implements Serializable {
     private String epName;
     private String epPhoneNumber;
     private Integer userId;
+    private String epCmt;
     private Users usersByUserId;
+    private Integer isDeleted;
+    private String status = "FREE";
     private List<StockEmployee> stockEmployeesByEmpId;
     private List<TackleEmployee> tackleEmployeesByEmpId;
     private List<TeamEmployeeJob> teamEmployeeJobsByEmpId;
 
     @Id
+    @GeneratedValue
     @Column(name = "emp_id")
     public int getEmpId() {
         return empId;
@@ -82,6 +86,16 @@ public class Employee implements Serializable {
     }
 
     @Basic
+    @Column(name = "ep_cmt", unique = true, nullable = true)
+    public String getEpCmt() {
+        return epCmt;
+    }
+
+    public void setEpCmt(String epCmt) {
+        this.epCmt = epCmt;
+    }
+
+    @Basic
     @Column(name = "user_id")
     public Integer getUserId() {
         return userId;
@@ -90,6 +104,26 @@ public class Employee implements Serializable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    @Basic
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "int default 0")
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    @Transient
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 
     @Override
     public boolean equals(Object o) {

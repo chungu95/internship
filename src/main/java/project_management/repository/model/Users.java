@@ -6,14 +6,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "users",
-        uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
-                             @UniqueConstraint(columnNames = "email")})
+        uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class Users implements Serializable{
     private int userId;
     private String password;
     private String userType;
     private String username;
-    private String userEmail;
     private List<UsersPermission> usersPermissionsByUserId;
     private Employee employeesByUserId;
 
@@ -26,15 +24,6 @@ public class Users implements Serializable{
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    @Column(name = "email", unique = true)
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     @Column(name = "password")
