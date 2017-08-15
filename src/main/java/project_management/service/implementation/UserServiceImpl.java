@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -37,5 +37,16 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    @Override
+    public Users getUserByUserName(String username) {
+        LOGGER.info("UserService -> Get user by username");
+        try {
+            return userRepository.findUsersByUsername(username);
+        } catch (HibernateException he) {
+            return null;
+        }
+    }
+
 
 }

@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import project_management.api.WebURL;
+import project_management.repository.model.Employee;
 import project_management.repository.model.Project;
 import project_management.service.service_interface.EmployeeService;
 import project_management.service.service_interface.ProjectService;
@@ -39,19 +37,31 @@ public class ProjectController {
     }
 
     @RequestMapping(value = WebURL.PROJECT.ADD_NEW_PROJECT_PAGE, method = RequestMethod.GET)
-    public String addNewProjectPage() {
+    public String addNewProjectPage(Model model) {
         LOGGER.info("ProjectController -> Redirect to new project page");
+        model.addAttribute("employees", employeeService.getAllEmployee());
         return "new-project";
     }
 
     @RequestMapping(value = WebURL.PROJECT.ADD_NEW_PROJECT, method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addNewProject(Project project) {
+        LOGGER.info("ProjectController -> Add new project");
         projectService.addProject(project);
         return "redirect:/" + WebURL.PROJECT.ALL_PROJECTS_PAGE;
     }
 
-    @RequestMapping(value = "checkProjKey", method = RequestMethod.GET)
+    @RequestMapping(value = WebURL.PROJECT.VIEW_PROJECT_DETAIL, method = RequestMethod.GET)
+    public String viewProjectDetail(Model model, @PathVariable("projId") Integer projId) {
+        LOGGER.info("ProjectController -> View detail of project has id: " + projId);
+        Project project = projectService.getProjectById(projId);
+        Employee employee = employeeService.getEmployeeById(project.getPmId());
+        model.addAttribute("project", project);
+        model.addAttribute("manager", employee);
+        return "project-detail";
+    }
+
+    @RequestMapping(value = WebURL.PROJECT.CHECK_PROJECT_KEY, method = RequestMethod.GET)
     @ResponseBody
     public String checkProjectKeyIfExist(@RequestParam(value = "projKey") String projKey) {
         if (projectService.checkProjectKeyIfExist(projKey)) {

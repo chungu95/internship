@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http//www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <resource th:replace="fragments/header :: resource"></resource>
+    <meta charset="UTF-8"/>
+    <title>Chi tiết</title>
+</head>
+<body class="no-skin">
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+    <div th:replace="fragments/side-bar :: sidebar"></div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="#">Dự án</a>
+                    </li>
+                    <li class="active">Chi tiết dự án</li>
+                </ul><!-- /.breadcrumb -->
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-11 label label-lg label-info arrowed-in arrowed-right">
+                                        <b>Thông tin cá nhân</b>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <ul class="list-unstyled spaced">
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Tên đăng nhập: <span class="red" th:text="${user.username}"></span></b>
+                                        </li>
+
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Họ và tên: <span class="red" th:text="${user.employeesByUserId.epName}"/></b>
+                                        </li>
+
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Ngày sinh: <span class="red" th:text="${user.employeesByUserId.epDayofbirth}"/></b>
+                                        </li>
+
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>
+                                            Địa chỉ: <span class="red" th:text="${user.employeesByUserId.epAddress}"/></b>
+                                        </li>
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Email: <span class="red" th:text="${user.employeesByUserId.epEmail}"/></b>
+                                        </li>
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Số điện thoại: <span class="red" th:text="${user.employeesByUserId.epPhoneNumber}"/></b>
+                                        </li>
+                                        <!--<li class="divider"></li>-->
+                                    </ul>
+                                </div>
+                            </div><!-- /.col -->
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-11 label label-lg label-success arrowed-in arrowed-right">
+                                        <b> Đổi mật khẩu</b>
+                                    </div>
+                                </div>
+                                <div class="col-sm-11">
+                                    <br/>
+                                <form id="frm" class="form-horizontal" role="form"
+                                      th:action="@{add-new-employee}"
+                                      enctype="application/x-www-form-urlencoded" method="post">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="ep_name"> Mật khẩu cũ </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="ep_name" name="epName"
+                                                   class="col-xs-10 col-sm-5" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="ep_address"> Mật khẩu mới </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="ep_address" name="epAddress"
+                                                   class="col-xs-10 col-sm-5" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="ep_email">
+                                            Nhập lại mật khẩu mới </label>
+                                        <div class="col-sm-9">
+                                            <input type="email" id="ep_email" name="epEmail"
+                                                   class="col-xs-10 col-sm-5" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button class="btn btn-info" type="submit">
+                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            Đổi mật khẩu
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            </div><!-- /.col -->
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

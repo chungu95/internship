@@ -32,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(Employee employee) {
         LOGGER.info("EmployeeService -> Add new employee");
         try {
+            employee.setIsDeleted(0);
             Users user = new Users();
             user.setUserType("employee");
             user.setUsername(employee.getEpCmt());

@@ -84,9 +84,14 @@
                                                            for="pmId">
                                                         Trưởng dự án </label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" id="pmId" name="pmId"
+                                                        <select id="pmId" name="pmId"
                                                                placeholder="Trưởng dự án"
-                                                               class="col-xs-10 col-sm-5" required="required"/>
+                                                                class="col-xs-10 col-sm-5" required="required">
+                                                            <option th:each="employee : ${employees}" th:value="${employee.empId}" th:text="${employee.epName}"></option>
+                                                        </select>
+                                                        <!--<input type="text" id="pmId" name="pmId"-->
+                                                               <!--placeholder="Trưởng dự án"-->
+                                                               <!--class="col-xs-10 col-sm-5" required="required"/>-->
                                                     </div>
                                                 </div>
                                                 <div class="form-group">

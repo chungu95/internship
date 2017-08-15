@@ -8,6 +8,7 @@ public class WebURL {
         public static final String LOGIN_PAGE = "/login";
         public static final String ADD_NEW_USER = "/add-user";
         public static final String CHECK_EXISTED_USER = "/check-existed-user";
+        public static final String MY_PROFILE = "myprofile";
     }
 
     public static class EMPLOYEE {
@@ -20,8 +21,11 @@ public class WebURL {
     }
 
     public static class PROJECT {
-        public static final String ALL_PROJECTS_PAGE = "all-projects";
-        public static final String ADD_NEW_PROJECT_PAGE = "add-new-project";
-        public static final String ADD_NEW_PROJECT = "add-project";
+        public static final String ALL_PROJECTS_PAGE = "/all-projects";
+        public static final String ADD_NEW_PROJECT_PAGE = "/add-new-project";
+        public static final String ADD_NEW_PROJECT = "/add-project";
+        public static final String CHECK_PROJECT_KEY = "/checkProjKey";
+        public static final String VIEW_PROJECT_DETAIL = "/project-detail/{projId}";
     }
+
 }

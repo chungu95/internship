@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http//www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <resource th:replace="fragments/header :: resource"></resource>
+    <meta charset="UTF-8"/>
+    <title>Chi tiết</title>
+</head>
+<body class="no-skin">
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+    <div th:replace="fragments/side-bar :: sidebar"></div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="#">Dự án</a>
+                    </li>
+                    <li class="active">Chi tiết dự án</li>
+                </ul><!-- /.breadcrumb -->
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-11 label label-lg label-info arrowed-in arrowed-right">
+                                        <b>Thông tin dự án</b>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <ul class="list-unstyled spaced">
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Từ khóa: <span class="red" th:text="${project.projKey}"></span></b>
+                                        </li>
+
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Tên dự án: <span class="red" th:text="${project.projName}"/></b>
+                                        </li>
+
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Quản lý bởi: <span class="red" th:text="${manager.epName}"/></b>
+                                        </li>
+
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>
+                                            Ngày tạo: <span class="red" th:text="${project.createTime}"/></b>
+                                        </li>
+                                        <li>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Ngày khởi công: <span class="red" th:text="${project.startTime}"/></b>
+                                        </li>
+                                        <li th:switch="${project.status}">
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b style="color: red" th:case="0">Chưa hoàn thành</b>
+                                            <b style="color: green" th:case="1">Ngày hoàn thành: <span class="red" th:text="${project.endTime}"/></b>
+                                        </li>
+                                        <!--<li class="divider"></li>-->
+                                    </ul>
+                                </div>
+                            </div><!-- /.col -->
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-11 label label-lg label-success arrowed-in arrowed-right">
+                                        <b></b>
+                                    </div>
+                                </div>
+                                <div class="tabbable col-sm-11">
+                                    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#home4">Công việc</a>
+                                        </li>
+
+                                        <li>
+                                            <a data-toggle="tab" href="#profile4">Nhân viên</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div id="home4" class="tab-pane in active">
+                                            <p>Danh sách công việc</p>
+                                        </div>
+
+                                        <div id="profile4" class="tab-pane">
+                                            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.col -->
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

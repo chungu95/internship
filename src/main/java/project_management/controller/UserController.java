@@ -3,10 +3,15 @@ package project_management.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import project_management.api.WebURL;
 import project_management.repository.model.Users;
 import project_management.repository.repository.EmployeeRepository;
 import project_management.repository.repository.UserRepository;
@@ -75,5 +80,14 @@ public class UserController {
 //        ep.setUserId(1);
 //        return employeeRepository.save(ep);
 //    }
+
+    @RequestMapping(value = WebURL.USER.MY_PROFILE, method = RequestMethod.GET)
+    String myProfile(Model model){
+        User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        LOGGER.info(u.getUsername());
+        Users user = userService.getUserByUserName(u.getUsername());
+        model.addAttribute("user",user);
+        return "my-profile";
+    }
 
 }

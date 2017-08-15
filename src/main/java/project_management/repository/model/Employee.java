@@ -106,7 +106,7 @@ public class Employee implements Serializable {
     }
 
     @Basic
-    @Column(name = "is_deleted", nullable = false, columnDefinition = "int default 0")
+    @Column(name = "is_deleted", nullable = false)
     public Integer getIsDeleted() {
         return isDeleted;
     }

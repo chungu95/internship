@@ -85,7 +85,7 @@
                                     <tbody>
                                     <tr th:each="employee : ${employees}">
                                         <td>
-                                            <span th:text="${employee.empId}"></span>
+                                            <span th:text="${employee.empId}"  th:field="*{employee[__${stat.index}__].empId}"></span>
                                         </td>
                                         <td>
                                             <span th:text="${employee.epName}"></span>
@@ -96,14 +96,12 @@
                                         <td>
                                             <span th:text="${employee.epCmt}"></span>
                                         </td>
-
                                         <td class="hidden-480" th:switch="${employee.status}">
                                                 <b>
                                                     <span style="color: green" th:case="FREE" th:text="${employee.status}"></span>
                                                     <span style="color: red" th:case="BUSY" th:text="${employee.status}"></span>
                                                 </b>
                                         </td>
-
                                         <td>
                                             <div class="hidden-sm hidden-xs btn-group">
                                                 <button class="btn btn-xs btn-success">

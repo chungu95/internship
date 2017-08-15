@@ -43,7 +43,7 @@
     <ul class="nav nav-list">
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-list"></i>
+                <i class="menu-icon blue fa fa-users bigger-130"></i>
                 <span class="menu-text"> Nhân viên </span>
 
                 <b class="arrow fa fa-angle-down"></b>
@@ -51,7 +51,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="">
-                    <a th:href="@{add-employee}">
+                    <a th:href="@{/add-employee}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Thêm nhân viên
                     </a>
@@ -59,7 +59,7 @@
                     <b class="arrow"></b>
                 </li>
                 <li class="">
-                    <a th:href="@{preview-all-employees}">
+                    <a th:href="@{/preview-all-employees}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Danh sách nhân viên
                     </a>
@@ -70,7 +70,7 @@
         </li>
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-list"></i>
+                <i class="menu-icon blue fa fa-tasks"></i>
                 <span class="menu-text"> Dự án </span>
 
                 <b class="arrow fa fa-angle-down"></b>
@@ -78,7 +78,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="">
-                    <a th:href="@{add-new-project}">
+                    <a th:href="@{/add-new-project}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Tạo dự án
                     </a>
@@ -86,7 +86,7 @@
                     <b class="arrow"></b>
                 </li>
                 <li class="">
-                    <a th:href="@{all-projects}">
+                    <a th:href="@{/all-projects}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Danh sách dự án
                     </a>
@@ -99,7 +99,7 @@
 
     <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
         <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
-           data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+           data-icon1="ace-icon red fa fa-angle-double-left" data-icon2="ace-icon blue fa fa-angle-double-right"></i>
     </div>
 </div>
 </body>
