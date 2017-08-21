@@ -75,6 +75,7 @@
                                             <form id="frm" class="form-horizontal" role="form"
                                                   th:action="@{/update-employee}"
                                                   enctype="application/x-www-form-urlencoded" method="post">
+                                                <input type="hidden" name="_method" value="put"/>
                                                 <input type="hidden" name="empId" th:value="${employee.empId}"/>
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label no-padding-right"

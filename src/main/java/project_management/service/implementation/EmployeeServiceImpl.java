@@ -5,7 +5,6 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project_management.api.DateApi;
-import project_management.api.WebURL;
 import project_management.repository.model.Employee;
 import project_management.repository.model.TeamEmployeeJob;
 import project_management.repository.model.Users;
@@ -32,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(Employee employee) {
         LOGGER.info("EmployeeService -> Add new employee");
         try {
+            employee.setIsDeleted(0);
             Users user = new Users();
             user.setUserType("employee");
             user.setUsername(employee.getEpCmt());
@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOGGER.info("EmployeeService -> Update employee");
         Employee _employee = employeeRepository.findOne(employee.getEmpId());
         if (_employee != null) {
-            prepareEmployeeToUpdate(employee,_employee);
+            prepareEmployeeToUpdate(employee, _employee);
             try {
                 employeeRepository.save(_employee);
                 return true;
@@ -124,6 +124,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private void setEmployeeStatus(Employee employee) {
+        if (employee == null) return;
         List<TeamEmployeeJob> teamEmployeeJobs = employee.getTeamEmployeeJobsByEmpId();
         for (int i = 0; i < teamEmployeeJobs.size(); i++) {
             if (!DateApi.getCurrentDate().after(teamEmployeeJobs.get(i).getStartTime()) && !DateApi.getCurrentDate().before(teamEmployeeJobs.get(i).getEndTime())) {
@@ -133,7 +134,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
-    private void prepareEmployeeToUpdate(Employee from, Employee to){
+    private void prepareEmployeeToUpdate(Employee from, Employee to) {
         to.setEpEmail(from.getEpEmail());
         to.setEpAddress(from.getEpAddress());
         to.setEpName(from.getEpName());

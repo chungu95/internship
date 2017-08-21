@@ -3,7 +3,8 @@
 <head>
     <resource th:replace="fragments/header :: resource"></resource>
     <script src="./public/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
-    <script src="./public/js/jquery.dataTables.bootstrap.min.js" th:src="@{js/jquery.dataTables.bootstrap.min.js}"></script>
+    <script src="./public/js/jquery.dataTables.bootstrap.min.js"
+            th:src="@{js/jquery.dataTables.bootstrap.min.js}"></script>
     <script src="./public/js/dataTables.buttons.min.js" th:src="@{js/dataTables.buttons.min.js}"></script>
     <script src="./public/js/buttons.flash.min.js" th:src="@{js/buttons.flash.min.js}"></script>
     <script src="./public/js/buttons.html5.min.js" th:src="@{js/buttons.html5.min.js}"></script>
@@ -85,7 +86,8 @@
                                     <tbody>
                                     <tr th:each="employee : ${employees}">
                                         <td>
-                                            <span th:text="${employee.empId}"></span>
+                                            <span th:text="${employee.empId}"
+                                                  th:field="*{employee[__${stat.index}__].empId}"></span>
                                         </td>
                                         <td>
                                             <span th:text="${employee.epName}"></span>
@@ -96,25 +98,27 @@
                                         <td>
                                             <span th:text="${employee.epCmt}"></span>
                                         </td>
-
                                         <td class="hidden-480" th:switch="${employee.status}">
-                                                <b>
-                                                    <span style="color: green" th:case="FREE" th:text="${employee.status}"></span>
-                                                    <span style="color: red" th:case="BUSY" th:text="${employee.status}"></span>
-                                                </b>
+                                            <b>
+                                                <span style="color: green" th:case="FREE"
+                                                      th:text="${employee.status}"></span>
+                                                <span style="color: red" th:case="BUSY"
+                                                      th:text="${employee.status}"></span>
+                                            </b>
                                         </td>
-
                                         <td>
                                             <div class="hidden-sm hidden-xs btn-group">
                                                 <button class="btn btn-xs btn-success">
                                                     <i class="ace-icon fa fa-check bigger-120"></i>
                                                 </button>
 
-                                                <a class="btn btn-xs btn-info" th:href="@{edit-employee/{empId}(empId=${employee.empId})}">
+                                                <a class="btn btn-xs btn-info"
+                                                   th:href="@{edit-employee/{empId}(empId=${employee.empId})}">
                                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                                 </a>
 
-                                                <a class="btn btn-xs btn-danger" th:href="@{delete-employee/{empId}(empId=${employee.empId})}">
+                                                <a class="btn btn-xs btn-danger"
+                                                   th:href="@{delete-employee/{empId}(empId=${employee.empId})}">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                 </a>
 
@@ -125,13 +129,14 @@
 
                                             <div class="hidden-md hidden-lg">
                                                 <div class="inline pos-rel">
-                                                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <button class="btn btn-minier btn-primary dropdown-toggle"
+                                                            data-toggle="dropdown" data-position="auto">
                                                         <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
                                                     </button>
-
                                                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                         <li>
-                                                            <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                            <a href="#" class="tooltip-info" data-rel="tooltip"
+                                                               title="View">
 																			<span class="blue">
 																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
 																			</span>
@@ -147,7 +152,8 @@
                                                         </li>
 
                                                         <li>
-                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                            <a href="#" class="tooltip-error" data-rel="tooltip"
+                                                               title="Delete">
 																			<span class="red">
 																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																			</span>

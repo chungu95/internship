@@ -5,5 +5,5 @@ import project_management.repository.model.Users;
 public interface UserService {
     Users createUser(Users userDTO);
     Users getUserById(Integer id);
-    
+    Users getUserByUserName(String username);
 }

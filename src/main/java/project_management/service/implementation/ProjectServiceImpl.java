@@ -3,10 +3,12 @@ package project_management.service.implementation;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import project_management.api.DateApi;
 import project_management.repository.model.Project;
 import project_management.repository.repository.ProjectRepository;
+import project_management.service.service_interface.JobService;
 import project_management.service.service_interface.ProjectService;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,10 +18,12 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
     private static final Logger LOGGER = Logger.getLogger(ProjectServiceImpl.class.getName());
     private final ProjectRepository projectRepository;
+    private final JobService jobService;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, @Qualifier("jobService") JobService jobService) {
         this.projectRepository = projectRepository;
+        this.jobService = jobService;
     }
 
     @Override
@@ -91,7 +95,9 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getProjectById(Integer id) {
         LOGGER.info("ProjectService -> Get project by id");
         try {
-            return projectRepository.findOne(id);
+            Project project = projectRepository.findOne(id);
+            jobService.setUpDisplayStatus(project.getJobsByProjId());
+            return project;
         } catch (HibernateException he) {
             LOGGER.error(he.getMessage());
             return null;

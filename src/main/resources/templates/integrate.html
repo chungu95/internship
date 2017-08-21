@@ -45,6 +45,15 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
+                        <div th:fragment="jobTree" th:remove="tag">
+                            <ul>
+                                <li th:each="jobSub : ${job.jobsByJobId}" >
+                                    <span th:text="${jobSub.jobName}">Town hall</span>
+                                    <div th:with="job = ${jobSub}"
+                                         th:include="this :: jobTree" th:remove="tag" />
+                                </li>
+                            </ul>
+                        </div>
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
