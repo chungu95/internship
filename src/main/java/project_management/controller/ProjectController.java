@@ -48,17 +48,20 @@ public class ProjectController {
     public String addNewProject(Project project) {
         LOGGER.info("ProjectController -> Add new project");
         projectService.addProject(project);
-        return "redirect:/" + WebURL.PROJECT.ALL_PROJECTS_PAGE;
+        return "redirect:" + WebURL.PROJECT.ALL_PROJECTS_PAGE;
     }
 
     @RequestMapping(value = WebURL.PROJECT.VIEW_PROJECT_DETAIL, method = RequestMethod.GET)
     public String viewProjectDetail(Model model, @PathVariable("projId") Integer projId) {
         LOGGER.info("ProjectController -> View detail of project has id: " + projId);
         Project project = projectService.getProjectById(projId);
-        Employee employee = employeeService.getEmployeeById(project.getPmId());
-        model.addAttribute("project", project);
-        model.addAttribute("manager", employee);
-        return "project-detail";
+        if (project == null) return "redirect:" + WebURL.PROJECT.ALL_PROJECTS_PAGE;
+        else {
+            Employee employee = employeeService.getEmployeeById(project.getPmId());
+            model.addAttribute("project", project);
+            model.addAttribute("manager", employee);
+            return "project-detail";
+        }
     }
 
     @RequestMapping(value = WebURL.PROJECT.CHECK_PROJECT_KEY, method = RequestMethod.GET)

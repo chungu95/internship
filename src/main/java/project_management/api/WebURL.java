@@ -28,4 +28,9 @@ public class WebURL {
         public static final String VIEW_PROJECT_DETAIL = "/project-detail/{projId}";
     }
 
+    public static class JOB {
+        public static final String VIEW_JOB_DETAIL = "/job-detail/{jobId}";
+        public static final String ADD_NEW_JOB = "/add-new-job";
+    }
+
 }

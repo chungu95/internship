@@ -3,6 +3,7 @@ package project_management.repository.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,9 @@ public class Job {
     private Integer projId;
     private Integer status;
     private Integer teamId;
+    private Date startTime;
+    private Date endTime;
+    private Integer displayStatus;
     private Job jobByParentId;
     private List<Job> jobsByJobId;
     private Phase phaseByPhaseId;
@@ -24,6 +28,7 @@ public class Job {
     private List<TeamEmployeeJob> teamEmployeeJobsByJobId;
 
     @Id
+    @GeneratedValue
     @Column(name = "job_id")
     public Integer getJobId() {
         return jobId;
@@ -111,6 +116,35 @@ public class Job {
 
     public void setTeamId(Integer teamId) {
         this.teamId = teamId;
+    }
+
+    @Basic
+    @Column(name="start_time")
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    @Basic
+    @Column(name="end_time")
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    @Transient
+    public Integer getDisplayStatus() {
+        return displayStatus;
+    }
+
+    public void setDisplayStatus(Integer displayStatus) {
+        this.displayStatus = displayStatus;
     }
 
     @Override

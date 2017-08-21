@@ -16,6 +16,7 @@ public class Phase {
     private List<ProjectPhase> projectPhasesByPhaseId;
 
     @Id
+    @GeneratedValue
     @Column(name = "phase_id")
     public int getPhaseId() {
         return phaseId;

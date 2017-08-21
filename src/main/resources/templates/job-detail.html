@@ -3,7 +3,7 @@
 <head>
     <resource th:replace="fragments/header :: resource"></resource>
     <meta charset="UTF-8"/>
-    <title>Chi tiết</title>
+    <title>Chi tiết công việc</title>
 </head>
 <body class="no-skin">
 <nav th:replace="fragments/header :: navbar"></nav>
@@ -127,33 +127,32 @@
                                     <ul class="list-unstyled spaced">
                                         <li>
                                             <i class="ace-icon fa fa-caret-right blue"></i><b>Từ khóa: <span class="red"
-                                                                                                             th:text="${project.projKey}"></span></b>
+                                                                                                             th:text="${job.estimateTime}"></span></b>
                                         </li>
-
                                         <li>
-                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Tên dự án: <span
-                                                class="red" th:text="${project.projName}"/></b>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Tên công việc: <span
+                                                class="red" th:text="${job.jobName}"/></b>
                                         </li>
-
-                                        <li>
-                                            <i class="ace-icon fa fa-caret-right blue"></i><b>Quản lý bởi: <span
-                                                class="red" th:text="${manager.epName}"/></b>
-                                        </li>
-
-                                        <li>
-                                            <i class="ace-icon fa fa-caret-right blue"></i><b>
-                                            Ngày tạo: <span class="red" th:text="${project.createTime}"/></b>
-                                        </li>
+                                        <!--<li>-->
+                                        <!--<i class="ace-icon fa fa-caret-right blue"></i><b>Quản lý bởi: <span-->
+                                        <!--class="red" th:text="${manager.epName}"/></b>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                        <!--<i class="ace-icon fa fa-caret-right blue"></i><b>-->
+                                        <!--Ngày tạo: <span class="red" th:text="${job.createTime}"/></b>-->
+                                        <!--</li>-->
                                         <li>
                                             <i class="ace-icon fa fa-caret-right blue"></i><b>Ngày khởi công: <span
-                                                class="red" th:text="${project.startTime}"/></b>
+                                                class="red" th:text="${job.startTime}"/></b>
                                         </li>
-                                        <li th:switch="${project.status}">
+                                        <li th:switch="${job.status}">
                                             <i class="ace-icon fa fa-caret-right blue"></i><b style="color: red"
-                                                                                              th:case="0">Chưa hoàn
-                                            thành</b>
-                                            <b style="color: green" th:case="1">Ngày hoàn thành: <span class="red"
-                                                                                                       th:text="${project.endTime}"/></b>
+                                                                                              th:case="0">Đang chờ</b>
+                                            <i class="ace-icon fa fa-caret-right blue"></i><b style="color: red"
+                                                                                              th:case="0">Đang thi
+                                            công</b>
+                                            <b style="color: green" th:case="2">Ngày hoàn thành: <span class="red"
+                                                                                                       th:text="${job.endTime}"/></b>
                                         </li>
                                         <!--<li class="divider"></li>-->
                                     </ul>
@@ -174,26 +173,21 @@
 
                                     <div class="tab-content">
                                         <div id="home4" class="tab-pane in active">
-                                            <span th:if="${#lists.isEmpty(project.jobsByProjId)}">Không có công việc nào!</span>
-                                            <div class="tree" th:each="job : ${project.jobsByProjId}"
-                                                 th:if="${job.jobByParentId ==null}">
+                                            <span th:if="${#lists.isEmpty(job.jobsByJobId)}">Không có công việc nào!</span>
+                                            <div class="tree" th:each="jb : ${job.jobsByJobId}"
+                                                 th:if="${not #lists.isEmpty(jb.jobsByJobId)}">
                                                 <ul>
-                                                    <li><span th:text="${job.jobName}"></span>&nbsp;&nbsp;
-                                                    <div th:fragment="jobTree" th:remove="tag">
-                                                        <ul>
-                                                            <li th:each="jobSub : ${job.jobsByJobId}">
-                                                                <span th:text="${jobSub.jobName}"></span>&nbsp;&nbsp;
-                                                                <!--<i th:switch="${jobSub.status}">-->
-                                                                <!--<span class="green" th:case="0">Đang chờ</span>-->
-                                                                <!--<span class="blue" th:case="1">Đang thi công</span>-->
-                                                                <!--<span class="red" th:case="2">Đã hoàn thành</span>-->
-                                                                <!--</i>-->
-                                                                <a th:href="@{/job-detail/{jobId}(jobId=${jobSub.jobId})}"><span>xem</span></a>
-                                                                <div th:with="job = ${jobSub}"
-                                                                     th:include="this :: jobTree" th:remove="tag"/>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    <li><span th:text="${jb.jobName}"></span>&nbsp;&nbsp;
+                                                        <div th:fragment="jobTree" th:remove="tag">
+                                                            <ul>
+                                                                <li th:each="jobSub : ${jb.jobsByJobId}">
+                                                                    <span th:text="${jobSub.jobName}"></span>&nbsp;&nbsp;
+                                                                    <a th:href="@{/job-detail/{jobId}(jobId=${jobSub.jobId})}"><span>xem</span></a>
+                                                                    <div th:with="jb = ${jobSub}"
+                                                                         th:include="this :: jobTree" th:remove="tag"/>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                             </div>
