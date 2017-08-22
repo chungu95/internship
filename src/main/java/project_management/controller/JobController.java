@@ -25,6 +25,7 @@ public class JobController {
 
     @RequestMapping(value = WebURL.JOB.VIEW_JOB_DETAIL, method = RequestMethod.GET)
     public String viewJobDetail(Model model, @PathVariable("jobId") Integer jobId) {
+        LOGGER.info("JobController -> Redirect to view job detail page");
         Job job = jobService.getJobById(jobId);
         model.addAttribute("job", job);
         return "job-detail";
@@ -33,10 +34,11 @@ public class JobController {
     @RequestMapping(value = WebURL.JOB.ADD_NEW_JOB, method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addNewJob(Job job) {
+        LOGGER.info("JobController -> Add new job");
         jobService.addJob(job);
         if (job.getParentId() != null)
-            return "redirect:" + WebURL.JOB.VIEW_JOB_DETAIL + "/" + job.getParentId();
+            return "redirect:/job-detail/" + job.getParentId();
         else
-            return "redirect:" + WebURL.PROJECT.VIEW_PROJECT_DETAIL + "/" + job.getProjId();
+            return "redirect:/project-detail/" + job.getProjId();
     }
 }
